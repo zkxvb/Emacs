@@ -25,6 +25,7 @@
 			 js2-mode
 			 nodejs-repl
 			 exec-path-from-shell
+			 popwin
 			 ) "Default packages")
 
 (setq package-selected-packages zkx/packages)
@@ -47,6 +48,7 @@
 (setq inhibit-splash-screen t)
 (setq-default cursor-type 'bar)
 (setq make-backup-files nil)
+(setq auto-save-default nil)
 
 (defun open-my-init-file()
   (interactive)
@@ -107,6 +109,9 @@
 (global-set-key (kbd "C-h C-f") 'find-function)
 (global-set-key (kbd "C-h C-v") 'find-variable)
 (global-set-key (kbd "C-h C-k") 'find-function-on-key)
+
+(require 'popwin)
+(popwin-mode t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
