@@ -76,6 +76,8 @@
 (global-hl-line-mode t)
 (load-theme 'monokai t)
 
+(global-auto-revert-mode t)
+
 (require 'hungry-delete)
 (global-hungry-delete-mode)
 
@@ -112,7 +114,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(company-idle-delay 0.08)
- '(company-minimum-prefix-length 1)
+ '(company-minimum-prefix-length 2)
  '(custom-safe-themes
    (quote
     ("d9646b131c4aa37f01f909fbdd5a9099389518eb68f25277ed19ba99adeb7279" default))))
