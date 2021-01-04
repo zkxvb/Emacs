@@ -4,42 +4,11 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 
-  (when (>= emacs-major-version 24)
-    (require 'package)
-    (package-initialize)
-    (setq package-archives '(("gnu" . "http://mirrors.ustc.edu.cn/elpa/gnu/")
-                         ("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/")
-                         ("melpa-stable" . "http://mirrors.ustc.edu.cn/elpa/melpa-stable/")
-                         ("org" . "http://mirrors.ustc.edu.cn/elpa/org/")))
-   ;; (add-to-list 'package-archives '("melpa", "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/") t)
-    )
-  (require 'cl)
-  ;; add whatever packages you want here
-  (defvar zkx/packages '(
-			 company
-			 monokai-theme
-			 hungry-delete
-			 swiper
-			 counsel
-			 smartparens
-			 js2-mode
-			 nodejs-repl
-			 exec-path-from-shell
-			 popwin
-			 ) "Default packages")
+(package-initialize)
 
-(setq package-selected-packages zkx/packages)
+(add-to-list 'load-path "~/.emacs.d/lisp/")
 
-  (defun zkx/packages-installed-p ()
-    (loop for pkg in zkx/packages
-      when (not (package-installed-p pkg)) do (return nil)
-      finally (return t)))
-  (unless (zkx/packages-installed-p )
-    (message "%s" "Refreshing package database...")
-    (package-refresh-contents)
-    (dolist (pkg zkx/packages)
-      (when (not (package-installed-p pkg))
-        (package-install pkg))))
+(require 'init-packages)
 
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -50,13 +19,17 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
+(abbrev-mode t)
+(define-abbrev-table 'global-abbrev-table '(
+					    ;; signature
+					    ("8zkx" "zhangkaixuan")
+					    ))
+
 (defun open-my-init-file()
   (interactive)
   (find-file "~/.emacs.d/init.el"))
 
 (global-set-key (kbd "<f2>") 'open-my-init-file)
-
-(global-company-mode t)
 
 (require 'org)
 (setq org-src-fontify-natively t)
@@ -69,27 +42,7 @@
 (setq recentf-max-menu-items 25)
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 
-(delete-selection-mode t)
 
-(setq initial-frame-alist (quote ((fullscreen . maximized))))
-
-(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
-
-(global-hl-line-mode t)
-(load-theme 'monokai t)
-
-(global-auto-revert-mode t)
-
-(require 'hungry-delete)
-(global-hungry-delete-mode)
-
-(require 'smartparens-config)
-(smartparens-global-mode t)
-;;(add-hook 'emacs-lisp-mode-hook 'smartparens-mode)
-;;(add-hook 'org-mode-hook 'smartparens-mode)
-
-(ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
 (global-set-key "\C-s" 'swiper)
 (global-set-key (kbd "\C-c C-r") 'ivy-resume)
 (global-set-key (kbd "M-x") 'counsel-M-x)
@@ -97,21 +50,23 @@
 (global-set-key (kbd "C-h f") 'counsel-describe-function)
 (global-set-key (kbd "C-h v") 'counsel-describe-variable)
 
-;; config js2-mode for js files
-(setq auto-mode-alist
-      (append
-       '(("\\.js\\'" . js2-mode))
-       auto-mode-alist))
+(delete-selection-mode t)
 
+(setq initial-frame-alist (quote ((fullscreen . maximized))))
+
+(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
+
+(global-hl-line-mode t)
+
+(setq ring-bell-function 'ignore)
+
+(global-auto-revert-mode t)
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
 (global-set-key (kbd "C-h C-f") 'find-function)
 (global-set-key (kbd "C-h C-v") 'find-variable)
 (global-set-key (kbd "C-h C-k") 'find-function-on-key)
-
-(require 'popwin)
-(popwin-mode t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
