@@ -42,7 +42,7 @@
 (require 'hungry-delete)
 (global-hungry-delete-mode)
 
-(require 'smartparens-config)
+;;(require 'smartparens-config)
 (smartparens-global-mode t)
 
 (load-theme 'monokai t)
